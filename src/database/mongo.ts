@@ -15,6 +15,8 @@ export const MongoClient = {
     this.client = client;
     this.db = db;
 
-    console.log("connected with mongodb");
+    console.log("connected to mongodb");
   }
 }
+
+// Singleton
