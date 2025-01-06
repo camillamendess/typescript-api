@@ -1,6 +1,7 @@
 import { CreateUserParams, ICreateUserRepository } from "../../controllers/create-users/protocols";
 import { MongoClient } from "../../database/mongo";
 import { User } from "../../models/user";
+import { MongoUser } from "../mongo-protocols";
 
 // Inserir dados no banco 
 
@@ -13,7 +14,7 @@ export class MongoCreateUserRepository implements ICreateUserRepository {
 
     // buscando o usuario
     const user = await MongoClient.db
-      .collection<Omit<User, "id">>("users")
+      .collection<MongoUser>("users")
       .findOne({ _id: insertedId });
 
     // validando
