@@ -1,14 +1,21 @@
 import { User } from "../../models/user";
-import { HttpResquest, HttpResponse } from "../protocols";
-import { IUpdateUserController, IUpdateUserRepository, UpdateUserParams } from "./protocols";
+import { HttpRequest, HttpResponse, IController } from "../protocols";
+import { IUpdateUserRepository, UpdateUserParams } from "./protocols";
 
-export class UpdateUserController implements IUpdateUserController {
+export class UpdateUserController implements IController {
   constructor(private readonly updateUserRepository: IUpdateUserRepository) { }
 
-  async handle(HttpResquest: HttpResquest<any>): Promise<HttpResponse<User>> {
+  async handle(HttpRequest: HttpRequest<UpdateUserParams>): Promise<HttpResponse<User | string>> {
     try {
-      const id = HttpResquest?.params?.id;
-      const body = HttpResquest?.body;
+      const id = HttpRequest?.params?.id;
+      const body = HttpRequest?.body;
+
+      if (!body) {
+        return {
+          statusCode: 400,
+          body: "Missing fields",
+        }
+      }
 
       if (!id) {
         return {

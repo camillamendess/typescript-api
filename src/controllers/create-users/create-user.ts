@@ -1,12 +1,12 @@
 import validator from "validator";
 import { User } from "../../models/user";
-import { HttpResponse, HttpResquest } from "../protocols";
-import { CreateUserParams, ICreateUserController, ICreateUserRepository } from "./protocols";
+import { HttpResponse, HttpRequest, IController } from "../protocols";
+import { CreateUserParams, ICreateUserRepository } from "./protocols";
 
-export class CreateUserController implements ICreateUserController {
+export class CreateUserController implements IController {
   constructor(private readonly createUserRepository: ICreateUserRepository) { }
 
-  async handle(httpRequest: HttpResquest<CreateUserParams>): Promise<HttpResponse<User>> {
+  async handle(httpRequest: HttpRequest<CreateUserParams>): Promise<HttpResponse<User | string>> {
     try {
 
       // verificar campos obrigatorios
