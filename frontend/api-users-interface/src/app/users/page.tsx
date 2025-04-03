@@ -1,3 +1,5 @@
+"use client"
+
 import Image from "next/image";
 import { useGetUsers } from "../api/hooks/get-users.hook";
 

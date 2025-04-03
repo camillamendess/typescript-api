@@ -1,3 +1,5 @@
+"use client"
+
 import { useState, useEffect } from "react";
 import { apiGateway } from "../gateway/api.gateway";
 import { GetUsersDTO } from "../gateway/api.gateway.dto";
