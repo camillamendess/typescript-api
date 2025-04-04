@@ -6,6 +6,8 @@ import { useGetUsers } from "../api/hooks/get-users.hook";
 const UsersPage = () => {
   const { data: users, loading, error } = useGetUsers();
 
+  console.log("Users:", users);
+
   return (
     <>
       <div className="flex flex-col justify-center items-start p-10 pb-2 ml-[88px]">
@@ -20,9 +22,6 @@ const UsersPage = () => {
       <div className="flex flex-wrap justify-center gap-6 rounded-2xl mt-4 pt-2">
         {/* Verifica se está carregando */}
         {loading && <p>Carregando usuários...</p>}
-
-        {/* Verifica erro */}
-        {error && <p className="text-red-500">{error}</p>}
 
         {/* Lista os usuários */}
         {!loading && !error && users.length > 0 ? (

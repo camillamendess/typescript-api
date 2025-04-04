@@ -1,10 +1,11 @@
 import { User } from "../../models/user";
 
 export interface CreateUserParams {
+  img: string;
   firstName: string;
   lastName: string;
-  email: string;
-  password: string;
+  city: string;
+  country: string;
 }
 
 export interface ICreateUserRepository {

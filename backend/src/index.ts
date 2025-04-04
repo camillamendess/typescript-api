@@ -1,4 +1,5 @@
 import express from "express";
+import cors from 'cors';
 import { config } from "dotenv";
 import { GetUsersController } from "./controllers/get-users/get-users";
 import { MongoGetUsersRepository } from "./repositories/get-users/mongo-get-users";
@@ -14,6 +15,8 @@ const main = async () => {
   config();
 
   const app = express();
+
+  app.use(cors());
 
   app.use(express.json());
 

@@ -1,6 +1,6 @@
 import axios, { AxiosInstance } from "axios";
 import { config } from "dotenv";
-import { GetUsersDTO } from "./api.gateway.dto";
+import { CreateUserInputDTO, CreateUserOutputDTO, GetUsersDTO, ResponseDTO } from "./api.gateway.dto";
 
 config();
 
@@ -16,7 +16,7 @@ export class ApiGateway {
     });
   }
 
-  public async getUsers(): Promise<GetUsersDTO> {
+  public async getUsers(): Promise<ResponseDTO<GetUsersDTO[]>> {
     return this.gateway.get("/users");
   }
 
@@ -24,9 +24,9 @@ export class ApiGateway {
     return this.gateway.get(`/users/${id}`);
   }
 
-  // public async createUser(data: any): Promise<any> {
-  //   return this.gateway.post("/users", data);
-  // }
+  public async createUser(input: CreateUserInputDTO): Promise<CreateUserOutputDTO> {
+    return this.gateway.post("/users", input);
+  }
 
   // public async updateUser(id: string, data: any): Promise<any> {
   //   return this.gateway.patch(`/users/${id}`, data);

@@ -13,7 +13,8 @@ export const useGetUsers = () => {
     const fetchUsers = async () => {
       try {
         const response = await apiGateway.getUsers();
-        setData([response]);
+        console.log("response", response);
+        setData(response.data);
       } catch (err) {
         console.error(err);
         setError("Erro ao buscar usuários");
