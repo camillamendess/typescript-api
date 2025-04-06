@@ -24,7 +24,7 @@ export class ApiGateway {
     return this.gateway.get(`/users/${id}`);
   }
 
-  public async createUser(input: CreateUserInputDTO): Promise<CreateUserOutputDTO> {
+  public async createUser(input: CreateUserInputDTO): Promise<ResponseDTO<CreateUserOutputDTO>> {
     return this.gateway.post("/users", input);
   }
 
