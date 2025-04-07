@@ -1,8 +1,9 @@
 import { Button } from "@/components/ui/button";
 import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useFormContext } from "react-hook-form";
+import { FieldValues, useFormContext } from "react-hook-form";
 import { UserFormValues } from "./user-schema";
+import { useCreateUser } from "@/app/api/hooks/create-user.hook";
 
 const fields: Array<{ name: "firstName" | "lastName" | "city" | "country" | "img"; label: string; placeholder: string }> = [
   { name: "firstName", label: "First Name", placeholder: "John" },
@@ -14,14 +15,38 @@ const fields: Array<{ name: "firstName" | "lastName" | "city" | "country" | "img
 
 interface UserFormProps {
   onSubmit: (data: UserFormValues) => void;
+  onClose: () => void; // Função para fechar o modal
 }
 
-export const UserForm = ({ onSubmit }: UserFormProps) => {
+export const UserForm = ({ onSubmit, onClose }: UserFormProps) => {
   const form = useFormContext<UserFormValues>();
+  const { createUser } = useCreateUser();
+
+  const handleSubmit = async (values: FieldValues) => {
+    const newUser = {
+      firstName: values.firstName,
+      lastName: values.lastName,
+      city: values.city,
+      country: values.country,
+      img: values.img,
+    };
+
+    // Cria o usuário
+    await createUser(newUser);
+
+    // Atualiza a lista de usuários
+    await onSubmit(newUser);
+
+    // Reseta o formulário
+    form.reset();
+
+    // Fecha o modal
+    onClose();
+  };
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+      <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
         {fields.map(({ name, label, placeholder }) => (
           <FormField
             key={name}
@@ -38,7 +63,7 @@ export const UserForm = ({ onSubmit }: UserFormProps) => {
             )}
           />
         ))}
-        <Button type="submit" className="bg-[#6d4c7d] text-white">
+        <Button type="submit" className="bg-[#6d4c7d] text-white cursor-pointer">
           Add
         </Button>
       </form>

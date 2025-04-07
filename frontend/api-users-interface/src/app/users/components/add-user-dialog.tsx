@@ -22,6 +22,12 @@ export const AddUserDialog = ({ open, onOpenChange, onSubmit }: AddUserDialogPro
     },
   });
 
+  const handleSubmit = async (data: UserFormValues) => {
+    await onSubmit(data); // Chama a função de submissão passada como prop
+    form.reset(); // Reseta o formulário
+    onOpenChange(false); // Fecha o diálogo
+  };
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent>
@@ -29,7 +35,7 @@ export const AddUserDialog = ({ open, onOpenChange, onSubmit }: AddUserDialogPro
           <DialogTitle>Add User</DialogTitle>
         </DialogHeader>
         <FormProvider {...form}>
-          <UserForm onSubmit={onSubmit} />
+          <UserForm onSubmit={handleSubmit} onClose={() => onOpenChange(false)} />
         </FormProvider>
       </DialogContent>
     </Dialog>

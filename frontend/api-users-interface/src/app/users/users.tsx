@@ -8,12 +8,13 @@ import { UserCard } from "./components/user-card";
 import { UserFormValues } from "./components/user-form/user-schema";
 
 const UsersPage = () => {
-  const { data: users, loading, error } = useGetUsers();
+  const { data: users, loading, error, refetch } = useGetUsers();
   const [openModal, setOpenModal] = useState(false);
 
   const onSubmit = (data: UserFormValues) => {
     console.log("Form Data:", data);
     setOpenModal(false);
+    refetch();
   };
 
   return (
