@@ -22,15 +22,15 @@ const UsersPage = () => {
       <AddUserDialog open={openModal} onOpenChange={setOpenModal} onSubmit={onSubmit} />
 
       <div className="flex flex-col justify-center items-center p-8 pb-2">
-        <h1 className="text-3xl font-bold">Users</h1>
+        <h1 className="text-3xl font-bold text-white">Users</h1>
         <div className="flex justify-center items-center gap-2">
           <input
             type="text"
             placeholder="Search"
-            className="border border-[#525252] w-[500px] rounded-2xl p-2 mt-2 focus:outline-none"
+            className="border border-[#52525270] w-[500px] rounded-2xl p-2 mt-2 focus:outline-none"
           />
           <Button
-            className="bg-[#6d4c7d] text-white p-5 rounded-2xl mt-2 cursor-pointer hover:bg-[#483353] transition duration-300 ease-in-out"
+            className="bg-[#765086] text-white p-5 rounded-2xl mt-2 cursor-pointer hover:bg-[#483353] transition duration-300 ease-in-out"
             onClick={() => setOpenModal(true)}
           >
             Add User
@@ -38,12 +38,12 @@ const UsersPage = () => {
         </div>
       </div>
 
-      <div className="flex flex-wrap justify-center gap-2 rounded-2xl mt-4 pt-2">
-        {loading && <p>Carregando usuários...</p>}
+      <div className="flex flex-wrap justify-center gap-4 rounded-2xl mt-4 pt-2">
+        {loading && <p className="text-white">Carregando usuários...</p>}
         {!loading && !error && users.length > 0 ? (
           users.map((user) => <UserCard key={user.id} user={user} />)
         ) : (
-          !loading && <p>Nenhum usuário encontrado.</p>
+          !loading && <p className="text-white">Nenhum usuário encontrado.</p>
         )}
       </div>
     </>
