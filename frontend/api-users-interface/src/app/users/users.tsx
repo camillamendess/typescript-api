@@ -41,7 +41,7 @@ const UsersPage = () => {
       <div className="flex flex-wrap justify-center gap-4 rounded-2xl mt-4 pt-2">
         {loading && <p className="text-white">Carregando usuários...</p>}
         {!loading && !error && users.length > 0 ? (
-          users.map((user) => <UserCard key={user.id} user={user} />)
+          users.map((user) => <UserCard key={user.id} user={user} onDelete={refetch} />)
         ) : (
           !loading && <p className="text-white">Nenhum usuário encontrado.</p>
         )}

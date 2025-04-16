@@ -29,3 +29,27 @@ export interface CreateUserOutputDTO {
   city: string;
   country: string;
 }
+
+export interface UpdateUserInputDTO {
+  id: string;
+  img?: string;
+  firstName?: string;
+  lastName?: string;
+  city?: string;
+  country?: string;
+}
+export interface UpdateUserOutputDTO {
+  id: string;
+  img: string;
+  firstName: string;
+  lastName: string;
+  city: string;
+  country: string;
+}
+export interface DeleteUserInputDTO {
+  id: string;
+}
+export interface DeleteUserOutputDTO {
+  id: string;
+  message: string;
+}
