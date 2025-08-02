@@ -1,4 +1,4 @@
-import { CreateUserParams, ICreateUserRepository } from "../../controllers/create-users/protocols";
+import { CreateUserParams, ICreateUserRepository } from "../../routes/user/controllers/create-users/protocols";
 import { MongoClient } from "../../database/mongo";
 import { User } from "../../models/user";
 import { MongoUser } from "../mongo-protocols";
