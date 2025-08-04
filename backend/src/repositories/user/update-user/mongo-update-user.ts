@@ -3,10 +3,10 @@ import { ObjectId } from "mongodb";
 import {
   IUpdateUserRepository,
   UpdateUserParams,
-} from "../../routes/user/controllers/update-user/protocols";
-import { MongoClient } from "../../database/mongo";
-import { User } from "../../models/user";
-import { MongoUser } from "../mongo-protocols";
+} from "../../../routes/user/controllers/update-user/protocols";
+import { MongoClient } from "../../../database/mongo";
+import { User } from "../../../models/user";
+import { MongoUser } from "../../mongo-protocols";
 
 export class MongoUpdateUserRepository implements IUpdateUserRepository {
   async updateUser(id: string, params: UpdateUserParams): Promise<User> {
