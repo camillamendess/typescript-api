@@ -12,6 +12,7 @@ A API permite:
 2. **Listar usuários**: Obter uma lista de todos os usuários cadastrados.
 3. **Atualizar dados de um usuário**: Modificar informações existentes de um usuário específico.
 4. **Deletar um usuário**: Remover um usuário do banco de dados.
+5. **Buscar um usuário pelo search**: Parando um param para o backend.
 
 ---
 
