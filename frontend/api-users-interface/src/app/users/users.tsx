@@ -2,20 +2,45 @@
 
 import { useGetUsers } from "../api/hooks/get-users.hook";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { Loader2 } from "lucide-react";
+import { useEffect, useState } from "react";
 import { AddUserDialog } from "./components/add-user-dialog";
 import { UserCard } from "./components/user-card";
-import { UserFormValues } from "./components/user-form/user-schema";
+import { useSearchUsers } from "../api/hooks/get-search-users.hook";
+import { useDebounce } from "@/utils/useDebounce";
 
 const UsersPage = () => {
-  const { data: users, loading, error, refetch } = useGetUsers();
   const [openModal, setOpenModal] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const debouncedSearchTerm = useDebounce(searchTerm, 500);
+  const { data: users, loading: hookLoading, error, refetch } = useGetUsers();
+  const { data: seachResults, loading: searchLoading } = useSearchUsers(debouncedSearchTerm);
 
-  const onSubmit = (data: UserFormValues) => {
-    console.log("Form Data:", data);
+  const displayedUsers = searchTerm ? seachResults : users;
+
+  // Estado customizado para delay no carregamento
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (!hookLoading && !searchLoading) {
+      const timeout = setTimeout(() => setLoading(false), 2000);
+      return () => clearTimeout(timeout);
+    } else {
+      setLoading(true);
+    }
+  }, [hookLoading, searchLoading]);
+
+  const onSubmit = () => {
     setOpenModal(false);
     refetch();
   };
+
+  const LoadingIndicator = () => (
+    <div className="flex justify-center items-center gap-2 text-white mt-4">
+      <Loader2 className="h-8 w-8 animate-spin" />
+      <span>Carregando usuários...</span>
+    </div>
+  );
 
   return (
     <>
@@ -28,6 +53,8 @@ const UsersPage = () => {
             type="text"
             placeholder="Search"
             className="border border-[#52525270] w-[500px] rounded-2xl p-2 mt-2 focus:outline-none"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
           />
           <Button
             className="bg-[#765086] text-white p-5 rounded-2xl mt-2 cursor-pointer hover:bg-[#483353] transition duration-300 ease-in-out"
@@ -39,11 +66,17 @@ const UsersPage = () => {
       </div>
 
       <div className="flex flex-wrap justify-center gap-4 rounded-2xl mt-4 pt-2">
-        {loading && <p className="text-white">Carregando usuários...</p>}
-        {!loading && !error && users.length > 0 ? (
-          users.map((user) => <UserCard key={user.id} user={user} onDelete={refetch} />)
+
+        {loading || searchLoading ? (
+          <LoadingIndicator />
+        ) : !error && displayedUsers && displayedUsers.length > 0 ? (
+          displayedUsers.map((user) => (
+            <UserCard key={user.id} user={user} onDelete={refetch} />
+          ))
         ) : (
-          !loading && <p className="text-white">Nenhum usuário encontrado.</p>
+          !loading && !searchLoading && debouncedSearchTerm && (
+            <p className="text-white">Nenhum usuário encontrado.</p>
+          )
         )}
       </div>
     </>

@@ -53,3 +53,9 @@ export interface DeleteUserOutputDTO {
   id: string;
   message: string;
 }
+
+export interface SearchUserInputDTO {
+  name: string;
+}
+
+export type SearchUserOutputDTO = GetUsersDTO[];

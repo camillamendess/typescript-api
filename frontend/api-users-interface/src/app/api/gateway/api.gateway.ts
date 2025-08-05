@@ -1,6 +1,6 @@
 import axios, { AxiosInstance } from "axios";
 import { config } from "dotenv";
-import { CreateUserInputDTO, CreateUserOutputDTO, DeleteUserInputDTO, DeleteUserOutputDTO, GetUsersDTO, ResponseDTO } from "./api.gateway.dto";
+import { CreateUserInputDTO, CreateUserOutputDTO, DeleteUserInputDTO, DeleteUserOutputDTO, GetUsersDTO, ResponseDTO, SearchUserInputDTO, SearchUserOutputDTO } from "./api.gateway.dto";
 
 config();
 
@@ -34,6 +34,10 @@ export class ApiGateway {
 
   public async deleteUser(input: DeleteUserInputDTO): Promise<ResponseDTO<DeleteUserOutputDTO>> {
     return this.gateway.delete(`/users/${input.id}`);
+  }
+
+  public async searchUser(input: SearchUserInputDTO): Promise<ResponseDTO<SearchUserOutputDTO>> {
+    return this.gateway.get(`users/search`, { params: { name: input.name } });
   }
 }
 
