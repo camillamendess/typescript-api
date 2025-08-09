@@ -1,4 +1,4 @@
-### Coisas que podem ser acrescentadas
+### Próximas melhorias / futuras implementações
 
 - Fazer deploy:
   - Banco de dados (ex: Supabase, MongoDB Atlas)
