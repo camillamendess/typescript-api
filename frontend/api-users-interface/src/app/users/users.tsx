@@ -25,7 +25,7 @@ const UsersPage = () => {
 
   useEffect(() => {
     if (!hookLoading && !searchLoading) {
-      const timeout = setTimeout(() => setLoading(false), 2000);
+      const timeout = setTimeout(() => setLoading(false), 1000);
       return () => clearTimeout(timeout);
     } else {
       setLoading(true);

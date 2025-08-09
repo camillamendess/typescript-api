@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Toaster, toast } from "sonner";
+import { toast } from "sonner";
 import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useFormContext } from "react-hook-form";
@@ -84,8 +84,6 @@ export const UserForm = ({ onSubmit, onClose, user }: UserFormProps) => {
           {user ? "Update" : "Add"}
         </Button>
       </form>
-
-      <Toaster />
     </Form>
   );
 };
