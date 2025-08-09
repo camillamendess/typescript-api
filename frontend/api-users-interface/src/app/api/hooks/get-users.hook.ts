@@ -14,7 +14,6 @@ export const useGetUsers = () => {
     setError(null);
     try {
       const response = await apiGateway.getUsers();
-      console.log("response", response);
       setData(response.data);
     } catch (err) {
       console.error(err);

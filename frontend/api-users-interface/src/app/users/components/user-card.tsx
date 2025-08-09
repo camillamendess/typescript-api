@@ -5,47 +5,35 @@ import { FaFilePen, FaRegTrashCan } from "react-icons/fa6";
 import DeleteUserAlert from "./delete-user-alert";
 import { useState } from "react";
 import { toast } from "sonner";
-
-interface UserProps {
-  user: {
-    id: string;
-    img: string;
-    firstName: string;
-    lastName: string;
-    city: string;
-    country: string;
-  }
+import { User } from "@/types";
+export interface UserProps {
+  user: User;
   onDelete: () => void;
+  onEdit: (user: User) => void;
 }
 
-export const UserCard = ({ user, onDelete }: UserProps) => {
+export const UserCard = ({ user, onDelete, onEdit }: UserProps) => {
   const { deleteUser } = useDeleteUser();
   const [isAlertOpen, setIsAlertOpen] = useState(false);
 
   const handleDelete = async () => {
     try {
-      await deleteUser(user.id);
-      toast("Event has been created.")
-      onDelete(); // chama refetch depois de deletar
+      if (user.id) {
+        await deleteUser(user.id);
+        toast("Usuario deletado.")
+        onDelete(); // chama refetch depois de deletar
+      }
     } catch (error) {
       console.error("Error deleting user:", error);
     }
   }
-
-  const handleOpenAlert = () => {
-    setIsAlertOpen(true); // Abre o alerta
-  };
-
-  const handleCloseAlert = () => {
-    setIsAlertOpen(false); // Fecha o alerta
-  };
 
   return (
     <>
       <DeleteUserAlert
         isOpen={isAlertOpen}
         onConfirm={handleDelete}
-        onCancel={handleCloseAlert}
+        onCancel={() => setIsAlertOpen(false)}
       />
       <div
         key={user.id}
@@ -53,11 +41,14 @@ export const UserCard = ({ user, onDelete }: UserProps) => {
   transition duration-300 ease-in-out"
       >
         <div className="absolute top-5 right-5 flex gap-0.5">
-          <button className="bg-[#765086] hover:bg-[#483353] cursor-pointer transition duration-300 ease-in-out p-1.5 pl-2 rounded-xl">
+          <button
+            onClick={() => onEdit(user)} // aqui abre o modal já com dados
+            className="bg-[#765086] hover:bg-[#483353] cursor-pointer transition duration-300 ease-in-out p-1.5 pl-2 rounded-xl"
+          >
             <FaFilePen color="white" size={16} />
           </button>
           <button
-            onClick={handleOpenAlert}
+            onClick={() => setIsAlertOpen(true)}
             className="bg-[#765086] hover:bg-[#483353] cursor-pointer transition duration-300 ease-in-out p-1.5 rounded-xl">
             <FaRegTrashCan color="white" size={16} />
           </button>

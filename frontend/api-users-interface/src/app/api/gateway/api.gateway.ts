@@ -1,6 +1,6 @@
 import axios, { AxiosInstance } from "axios";
 import { config } from "dotenv";
-import { CreateUserInputDTO, CreateUserOutputDTO, DeleteUserInputDTO, DeleteUserOutputDTO, GetUsersDTO, ResponseDTO, SearchUserInputDTO, SearchUserOutputDTO } from "./api.gateway.dto";
+import { CreateUserInputDTO, CreateUserOutputDTO, DeleteUserInputDTO, DeleteUserOutputDTO, GetUsersDTO, ResponseDTO, SearchUserInputDTO, SearchUserOutputDTO, UpdateUserInputDTO, UpdateUserOutputDTO } from "./api.gateway.dto";
 
 config();
 
@@ -28,9 +28,10 @@ export class ApiGateway {
     return this.gateway.post("/users", input);
   }
 
-  // public async updateUser(id: string, data: any): Promise<any> {
-  //   return this.gateway.patch(`/users/${id}`, data);
-  // }
+  public async updateUser(input: UpdateUserInputDTO): Promise<ResponseDTO<UpdateUserOutputDTO>> {
+    const { id, ...data } = input;
+    return this.gateway.patch(`/users/${id}`, data);
+  }
 
   public async deleteUser(input: DeleteUserInputDTO): Promise<ResponseDTO<DeleteUserOutputDTO>> {
     return this.gateway.delete(`/users/${input.id}`);
